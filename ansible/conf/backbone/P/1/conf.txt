@@ -1,0 +1,140 @@
+! Command: show running-config
+! device: P-12 (vEOS-lab, EOS-4.33.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+enable password sha512 $6$LqGyROaoV5iZaIck$dPqC6nkD2NrohZEBa3IKRJA73BauIn4ediXlH18weQ3ApfTLCO7YE2kRixo9iWyMAgI7tBTK1wRAm90/kUboX.
+no aaa root
+!
+username cvpadmin privilege 15 secret sha512 $6$/M6tySe.0CtB5CZv$rVY5wujDkMsPcvmGQhniPVnkmRBbDT/O3w1WW/hpOGa3CSFXQ5ClwEnUvg0uxxZil0l8MmE14Oq710jPohAl41
+username scp privilege 15 shell /bin/bash secret sha512 $6$5wgDdqbVId68Wr3H$SkH/PcsbKOcXZIXXsmeoDIv17cK77oTQifzDNGV3AOKjA9XmNWfNtGUd09gCRmYJISeF9AI86AImLdfGbB4En/
+!
+management api http-commands
+   protocol http
+   no shutdown
+   !
+   vrf managment
+      no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname P-12
+!
+spanning-tree mode mstp
+no spanning-tree vlan-id 4094
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance managment
+!
+vrf instance customer
+!
+aaa authentication login console local
+aaa authorization exec default local
+!
+interface Ethernet1
+   no switchport
+   isis enable Osiris
+!
+interface Ethernet2
+   no switchport
+   isis enable Osiris
+   ip address 10.0.0.18/31
+!
+interface Ethernet3
+   no switchport
+   isis enable Osiris
+   ip address 10.0.0.20/31
+!
+interface Ethernet4
+   no switchport
+   isis enable Osiris
+   ip address 10.0.0.15/31
+!
+interface Ethernet5
+   no switchport
+   isis enable Osiris
+   ip address 10.0.0.7/31
+!
+interface Ethernet6
+   no switchport
+   isis enable Osiris
+!
+interface Ethernet7
+   no switchport
+   isis enable Osiris
+!
+interface Ethernet8
+   no switchport
+   isis enable Osiris
+!
+interface Management1
+   vrf managment
+   ip address 192.168.28.60/24
+!
+interface Loopback0
+   ip address 12.12.12.12/32
+!
+interface Loopback1
+   ip address 100.12.12.12/32
+!
+ip routing
+no ip routing vrf managment
+ip routing vrf customer
+!
+ip route vrf managment 0.0.0.0/0 192.168.28.254
+!
+mpls ip
+!
+mpls ldp
+   router-id interface Loopback1
+   neighbor hello-redundancy duration 100
+   no shutdown
+!
+router bgp 65100
+   router-id 12.12.12.12
+   bgp route-reflector preserve-attributes
+   maximum-paths 5 ecmp 5
+   neighbor PEER-RR peer group
+   neighbor PEER-RR remote-as 65100
+   neighbor PEER-RR update-source Loopback0
+   neighbor PEER-RR route-reflector-client
+   neighbor 12.1.1.1 peer group PEER-RR
+   neighbor 12.2.2.2 peer group PEER-RR
+   neighbor 1.1.1.1 peer group PEER-RR
+   neighbor 2.2.2.2 peer group PEER-RR
+   !
+   address-family vpn-ipv4
+      neighbor PEER-RR activate
+      neighbor default encapsulation mpls next-hop-self source-interface Loopback1
+      neighbor default encapsulation mpls next-hop-self received-vpnv4-routes
+   !
+   vrf customer
+      rd 33.33.33.33:1
+      route-target import vpn-ipv4 65100:1
+      route-target export vpn-ipv4 65100:1
+      redistribute connected
+      redistribute static
+!
+router isis Osiris
+   net 49.0001.1010.1040.1012.00
+   redistribute connected
+   authentication mode md5
+   authentication key 7 jYO4nxZul9LzFY/fc129xQ==
+   !
+   address-family ipv4 unicast
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

@@ -1,0 +1,15 @@
+---
+- name: Run commands on remote cEOS-lab device
+  hosts: arista
+  connection: httpapi
+  gather_facts: no
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+
+  tasks:
+
+    - name: Reset Configuration with device-specific file
+      eos_config:
+        lines:
+          - "configure replace file:/home/admin/{{ inventory_hostname | regex_replace('.*-(\\d+)$', '\\1') }}.ios ignore-errors"
+      when: ansible_network_os == 'eos'

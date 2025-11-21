@@ -1,0 +1,73 @@
+{
+    "arista": {
+        "hosts": {
+            "rr1": {
+                "ansible_host": "192.168.28.50",
+                "ansible_httpapi_port": 443
+            },
+            "rr2": {
+                "ansible_host": "192.168.28.51",
+                "ansible_httpapi_port": 443
+            },
+
+            "pe1": {
+                "ansible_host": "192.168.28.52",
+                "ansible_httpapi_port": 443
+            },
+            "pe2": {
+                "ansible_host": "192.168.28.53",
+                "ansible_httpapi_port": 443
+            },
+            "pe3": {
+                "ansible_host": "192.168.28.54",
+                "ansible_httpapi_port": 443
+            },
+            "pe4": {
+                "ansible_host": "192.168.28.55",
+                "ansible_httpapi_port": 443
+            },
+            "pe5": {
+                "ansible_host": "192.168.28.56",
+                "ansible_httpapi_port": 443
+            },
+            "pe6": {
+                "ansible_host": "192.168.28.57",
+                "ansible_httpapi_port": 443
+            },
+            "pe7": {
+                "ansible_host": "192.168.28.58",
+                "ansible_httpapi_port": 443
+            },
+            "pe8": {
+                "ansible_host": "192.168.28.59",
+                "ansible_httpapi_port": 443
+            },
+
+            "p12": {
+                "ansible_host": "192.168.28.60",
+                "ansible_httpapi_port": 443
+            },
+                        "p34": {
+                "ansible_host": "192.168.28.61",
+                "ansible_httpapi_port": 443
+            },
+                        "p56": {
+                "ansible_host": "192.168.28.62",
+                "ansible_httpapi_port": 443
+            },
+                        "p78": {
+                "ansible_host": "192.168.28.63",
+                "ansible_httpapi_port": 443
+            }
+            
+
+        },
+        "vars": {
+            "ansible_network_os": "eos",
+            "ansible_httpapi_use_ssl": "yes",
+            "ansible_httpapi_validate_certs": "no",
+            "ansible_user": "cvpadmin",
+            "ansible_httpapi_password": "Exaprobe1234"
+        }
+    }
+}

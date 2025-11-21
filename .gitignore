@@ -1,0 +1,3 @@
+ansible/MULTI-DC-VXLAN/venv/
+ansible/backbone/venv/
+.vscode/

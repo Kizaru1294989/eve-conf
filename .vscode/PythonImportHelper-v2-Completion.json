@@ -1,0 +1,124 @@
+[
+    {
+        "label": "SSHClient",
+        "importPath": "paramiko",
+        "description": "paramiko",
+        "isExtraImport": true,
+        "detail": "paramiko",
+        "documentation": {}
+    },
+    {
+        "label": "SSHClient",
+        "importPath": "paramiko",
+        "description": "paramiko",
+        "isExtraImport": true,
+        "detail": "paramiko",
+        "documentation": {}
+    },
+    {
+        "label": "SCPClient",
+        "importPath": "scp",
+        "description": "scp",
+        "isExtraImport": true,
+        "detail": "scp",
+        "documentation": {}
+    },
+    {
+        "label": "SCPClient",
+        "importPath": "scp",
+        "description": "scp",
+        "isExtraImport": true,
+        "detail": "scp",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "ssh_scp_file",
+        "kind": 2,
+        "importPath": "ansible.backbone.backbone",
+        "description": "ansible.backbone.backbone",
+        "peekOfCode": "def ssh_scp_file(ip, user, pwd, local_file, remote_dir):\n    ssh = SSHClient()\n    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())\n    ssh.connect(ip, username=user, password=pwd, look_for_keys=False)\n    with SCPClient(ssh.get_transport()) as scp:\n        scp.put(local_file, remote_path=remote_dir)\ndef distribute_confs(user, pwd):\n    # On parcourt directement les dossiers \"1\",\"2\",... de PE\n    for folder in sorted(os.listdir(conf_base_path), key=lambda x: int(x)):\n        local_conf = os.path.join(conf_base_path, folder, \"conf.txt\")",
+        "detail": "ansible.backbone.backbone",
+        "documentation": {}
+    },
+    {
+        "label": "distribute_confs",
+        "kind": 2,
+        "importPath": "ansible.backbone.backbone",
+        "description": "ansible.backbone.backbone",
+        "peekOfCode": "def distribute_confs(user, pwd):\n    # On parcourt directement les dossiers \"1\",\"2\",... de PE\n    for folder in sorted(os.listdir(conf_base_path), key=lambda x: int(x)):\n        local_conf = os.path.join(conf_base_path, folder, \"conf.txt\")\n        # calcule du suffixe IP\n        ip = network_prefix + str(int(folder) + offset)\n        print(f\">> {ip} ← {local_conf}\")\n        ssh_scp_file(ip, user, pwd, local_conf, remote_path)\nif __name__ == \"__main__\":\n    distribute_confs(\"cvpadmin\", \"Exaprobe1234\")",
+        "detail": "ansible.backbone.backbone",
+        "documentation": {}
+    },
+    {
+        "label": "remote_path",
+        "kind": 5,
+        "importPath": "ansible.backbone.backbone",
+        "description": "ansible.backbone.backbone",
+        "peekOfCode": "remote_path = \"/home/cvpadmin/\"\nconf_base_path = \"/mnt/c/Users/rrais/Desktop/Dev/EVE-GILGAMESSH/ansible/conf/backbone/PE\"\nnetwork_prefix = \"192.168.28.\"\noffset = 50  # le “+50” dans vos IP\ndef ssh_scp_file(ip, user, pwd, local_file, remote_dir):\n    ssh = SSHClient()\n    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())\n    ssh.connect(ip, username=user, password=pwd, look_for_keys=False)\n    with SCPClient(ssh.get_transport()) as scp:\n        scp.put(local_file, remote_path=remote_dir)",
+        "detail": "ansible.backbone.backbone",
+        "documentation": {}
+    },
+    {
+        "label": "conf_base_path",
+        "kind": 5,
+        "importPath": "ansible.backbone.backbone",
+        "description": "ansible.backbone.backbone",
+        "peekOfCode": "conf_base_path = \"/mnt/c/Users/rrais/Desktop/Dev/EVE-GILGAMESSH/ansible/conf/backbone/PE\"\nnetwork_prefix = \"192.168.28.\"\noffset = 50  # le “+50” dans vos IP\ndef ssh_scp_file(ip, user, pwd, local_file, remote_dir):\n    ssh = SSHClient()\n    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())\n    ssh.connect(ip, username=user, password=pwd, look_for_keys=False)\n    with SCPClient(ssh.get_transport()) as scp:\n        scp.put(local_file, remote_path=remote_dir)\ndef distribute_confs(user, pwd):",
+        "detail": "ansible.backbone.backbone",
+        "documentation": {}
+    },
+    {
+        "label": "network_prefix",
+        "kind": 5,
+        "importPath": "ansible.backbone.backbone",
+        "description": "ansible.backbone.backbone",
+        "peekOfCode": "network_prefix = \"192.168.28.\"\noffset = 50  # le “+50” dans vos IP\ndef ssh_scp_file(ip, user, pwd, local_file, remote_dir):\n    ssh = SSHClient()\n    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())\n    ssh.connect(ip, username=user, password=pwd, look_for_keys=False)\n    with SCPClient(ssh.get_transport()) as scp:\n        scp.put(local_file, remote_path=remote_dir)\ndef distribute_confs(user, pwd):\n    # On parcourt directement les dossiers \"1\",\"2\",... de PE",
+        "detail": "ansible.backbone.backbone",
+        "documentation": {}
+    },
+    {
+        "label": "offset",
+        "kind": 5,
+        "importPath": "ansible.backbone.backbone",
+        "description": "ansible.backbone.backbone",
+        "peekOfCode": "offset = 50  # le “+50” dans vos IP\ndef ssh_scp_file(ip, user, pwd, local_file, remote_dir):\n    ssh = SSHClient()\n    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())\n    ssh.connect(ip, username=user, password=pwd, look_for_keys=False)\n    with SCPClient(ssh.get_transport()) as scp:\n        scp.put(local_file, remote_path=remote_dir)\ndef distribute_confs(user, pwd):\n    # On parcourt directement les dossiers \"1\",\"2\",... de PE\n    for folder in sorted(os.listdir(conf_base_path), key=lambda x: int(x)):",
+        "detail": "ansible.backbone.backbone",
+        "documentation": {}
+    },
+    {
+        "label": "run_ansible_playbook",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def run_ansible_playbook(playbook_path):\n    os.chdir(os.path.dirname(playbook_path))\n    try:\n        subprocess.run([\"ansible-playbook\", os.path.basename(playbook_path)], check=True)\n    except subprocess.CalledProcessError as e:\n        return False\n    else:\n        return True\ndef main():\n    print(f'Processing Start')",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def main():\n    print(f'Processing Start')\n    playbook = run_ansible_playbook(\"/home/rais/Arista_Nexus_Backbone/Ansible/fabric/replace.yml\")\n    return playbook\nif __name__ == '__main__':\n    main()",
+        "detail": "main",
+        "documentation": {}
+    }
+]

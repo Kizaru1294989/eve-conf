@@ -1,0 +1,21 @@
+---
+- name: Run commands on remote cEOS-lab device
+  hosts: arista
+  connection: httpapi
+  gather_facts: no
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+
+  tasks:
+
+    - name: Reset Configuration
+      eos_config:
+        lines: 
+          - configure replace file:/home/cvpadmin/conf.txt ignore-errors
+
+      when: ansible_network_os == 'eos'
+
+
+
+
+

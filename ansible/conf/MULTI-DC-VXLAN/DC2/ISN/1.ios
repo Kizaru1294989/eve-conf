@@ -1,0 +1,137 @@
+! Command: show running-config
+! device: DC2-SN-1 (vEOS-lab, EOS-4.33.2F)
+!
+! boot system flash:/vEOS-lab.swi
+!
+enable password sha512 $6$LqGyROaoV5iZaIck$dPqC6nkD2NrohZEBa3IKRJA73BauIn4ediXlH18weQ3ApfTLCO7YE2kRixo9iWyMAgI7tBTK1wRAm90/kUboX.
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$do7FYHkgRFmMviTk$nBSDUW/oy8EBo4qY1TWoF.XntExs3qyop/AJlD.qmyH11..Dc6iMmdG8x.ShYTJS1E97jeIKVjm7vyPigPfdg/
+username scp privilege 15 shell /bin/bash secret sha512 $6$5wgDdqbVId68Wr3H$SkH/PcsbKOcXZIXXsmeoDIv17cK77oTQifzDNGV3AOKjA9XmNWfNtGUd09gCRmYJISeF9AI86AImLdfGbB4En/
+!
+management api http-commands
+   protocol http
+   no shutdown
+   !
+   vrf managment
+      no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname DC2-ISN-1
+!
+spanning-tree mode mstp
+no spanning-tree vlan-id 4094
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 3600
+   trunk group mlag
+!
+vrf instance managment
+!
+aaa authentication login console local
+aaa authorization exec default local
+!
+interface Port-Channel3600
+   switchport mode trunk
+   switchport trunk group mlag
+!
+interface Ethernet1
+!
+interface Ethernet2
+   no switchport
+   ip address 50.0.0.2/30
+   ip ospf network point-to-point
+!
+interface Ethernet3
+   no switchport
+   ip address 50.0.0.14/30
+   ip ospf network point-to-point
+!
+interface Ethernet4
+   switchport mode trunk
+   channel-group 3600 mode active
+!
+interface Ethernet5
+   switchport mode trunk
+   channel-group 3600 mode active
+!
+interface Ethernet6
+   no switchport
+   ip address 10.0.0.15/31
+   ip ospf network point-to-point
+!
+interface Ethernet7
+   no switchport
+   ip address 30.10.1.9/30
+   ip ospf network point-to-point
+!
+interface Ethernet8
+!
+interface Loopback0
+   ip address 50.1.1.3/32
+!
+interface Management1
+   vrf managment
+   ip address 192.168.28.115/24
+!
+interface Vlan3600
+   no autostate
+   ip address 100.0.0.13/30
+!
+ip routing
+no ip routing vrf managment
+!
+mlag configuration
+   domain-id mlag
+   local-interface Vlan3600
+   peer-address 100.0.0.14
+   peer-link Port-Channel3600
+!
+ip route vrf managment 0.0.0.0/0 192.168.28.254
+!
+router bgp 65102
+   router-id 50.1.1.3
+   maximum-paths 3 ecmp 3
+   neighbor DC2-GROUP peer group
+   neighbor DC2-GROUP remote-as 65002
+   neighbor DC2-GROUP update-source Loopback0
+   neighbor DC2-GROUP ebgp-multihop 5
+   neighbor ISN-GROUP peer group
+   neighbor ISN-GROUP remote-as 65101
+   neighbor ISN-GROUP update-source Loopback0
+   neighbor ISN-GROUP ebgp-multihop 5
+   neighbor 50.1.1.1 peer group ISN-GROUP
+   neighbor 50.1.1.2 peer group ISN-GROUP
+   neighbor 24.1.1.5 peer group DC2-GROUP
+   neighbor 24.1.1.6 peer group DC2-GROUP
+   !
+   address-family evpn
+      neighbor DC2-GROUP activate
+      neighbor ISN-GROUP activate
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+router ospf 100
+   router-id 50.1.1.3
+   network 10.0.0.8/31 area 0.0.0.0
+   network 10.0.0.14/31 area 0.0.0.0
+   network 30.10.1.8/30 area 0.0.0.0
+   network 50.0.0.0/30 area 0.0.0.0
+   network 50.0.0.12/30 area 0.0.0.0
+   network 50.1.1.3/32 area 0.0.0.0
+   max-lsa 12000
+!
+end

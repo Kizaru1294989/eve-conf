@@ -1,0 +1,81 @@
+{
+    "arista": {
+        "hosts": {
+            "DC1-SPINE-1": {
+                "ansible_host": "192.168.28.101",
+                "ansible_httpapi_port": 443
+            },
+            "DC1-SPINE-2": {
+                "ansible_host": "192.168.28.102",
+                "ansible_httpapi_port": 443
+            },
+            "DC2-SPINE-1": {
+                "ansible_host": "192.168.28.103",
+                "ansible_httpapi_port": 443
+            },
+            "DC2-SPINE-2": {
+                "ansible_host": "192.168.28.104",
+                "ansible_httpapi_port": 443
+            },
+            
+            "DC1-LEAF-1": {
+                "ansible_host": "192.168.28.105",
+                "ansible_httpapi_port": 443
+            },
+            "DC1-LEAF-2": {
+                "ansible_host": "192.168.28.106",
+                "ansible_httpapi_port": 443
+            },
+            "DC2-LEAF-1": {
+                "ansible_host": "192.168.28.107",
+                "ansible_httpapi_port": 443
+            },
+            "DC2-LEAF-2": {
+                "ansible_host": "192.168.28.108",
+                "ansible_httpapi_port": 443
+            },
+
+            "DC1-BORDER-LEAF-1": {
+                "ansible_host": "192.168.28.109",
+                "ansible_httpapi_port": 443
+            },
+            "DC1-BORDER-LEAF-2": {
+                "ansible_host": "192.168.28.110",
+                "ansible_httpapi_port": 443
+            },
+            "DC2-BORDER-LEAF-1": {
+                "ansible_host": "192.168.28.111",
+                "ansible_httpapi_port": 443
+            },
+            "DC2-BORDER-LEAF-2": {
+                "ansible_host": "192.168.28.112",
+                "ansible_httpapi_port": 443
+            },
+
+
+            "DC1-ISN-1": {
+                "ansible_host": "192.168.28.113",
+                "ansible_httpapi_port": 443
+            },
+            "DC1-ISN-2": {
+                "ansible_host": "192.168.28.114",
+                "ansible_httpapi_port": 443
+            },
+            "DC2-ISN-1": {
+                "ansible_host": "192.168.28.115",
+                "ansible_httpapi_port": 443
+            },
+            "DC2-ISN-2": {
+                "ansible_host": "192.168.28.116",
+                "ansible_httpapi_port": 443
+            }
+        },
+        "vars": {
+            "ansible_network_os": "eos",
+            "ansible_httpapi_use_ssl": "yes",
+            "ansible_httpapi_validate_certs": "no",
+            "ansible_user": "admin",
+            "ansible_httpapi_password": "admin"
+        }
+    }
+}
