@@ -114,8 +114,9 @@ interface Vxlan1
    vxlan vrf customer-a vni 10100
    vxlan vlan 10 vni 1010
    vxlan vlan 20 vni 1020
+   vxlan learn-restrict any
 !
-ip virtual-router mac-address 00:1c:73:00:00:24
+ip virtual-router mac-address 00:1c:73:00:00:12
 !
 ip routing
 ip routing vrf customer-a
